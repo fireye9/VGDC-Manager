@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
 
-    float members = 4f;
+    public float members = 4f;
     Text membersField;
 
-    float satisfaction = 30f;
+    public float satisfaction = 30f;
     Text satisfactionField;
 
-    float productivity = 20f;
+    public float productivity = 20f;
     Slider productivityField;
 
-    int week = 1;
-    float day = 1;
+    public int week = 1;
+    public float day = 1;
     Text calendarField;
 
     Canvas gameCanvas;
