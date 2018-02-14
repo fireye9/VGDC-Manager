@@ -1,4 +1,0 @@
-Testing inserting text
-Hello
-
-What will you choose?
