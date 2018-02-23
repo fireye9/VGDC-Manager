@@ -8,7 +8,7 @@ public class GameStateManager : MonoBehaviour {
     public float members = 10f;
     Text membersField;
 
-    public float satisfaction = 30f;
+    public float satisfaction = 80f;
     Text satisfactionField;
 
     public float productivity = 0f;
@@ -59,15 +59,21 @@ public class GameStateManager : MonoBehaviour {
     {
         if (newValue > 7.0f)
         {
+            //Cycle End
             if (week == 10)
             {
-                Debug.Log("it's a new cycle");
+                float memberChanges = Mathf.Ceil((satisfaction - 20) / 5);
+                if (memberChanges < 0)
+                    memberChanges = 0;
+                SetMembers(memberChanges);
                 //Show the cycle results window?
+                week = 1;
+                day = 1;
             }
             else
             {
-                Time.timeScale = 0;
                 PopUpPrompt();
+                Time.timeScale = 0;
             }
         }
         else
@@ -84,6 +90,6 @@ public class GameStateManager : MonoBehaviour {
     {
         if (productivity < 100)
             SetProductivity(productivity + 1 * Time.deltaTime * 0.835f);
-        SetDay(day + Time.deltaTime * 0.5f * 5f);
+        SetDay(day + Time.deltaTime * 0.5f);
     }
 }

@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   members: 4
-  satisfaction: 30
+  satisfaction: 80
   productivity: 0
   week: 1
   day: 1
