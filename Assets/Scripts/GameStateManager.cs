@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
 
-    public float members = 4f;
+    public float members = 10f;
     Text membersField;
 
     public float satisfaction = 30f;
     Text satisfactionField;
 
-    public float productivity = 20f;
+    public float productivity = 0f;
     Slider productivityField;
 
     public int week = 1;
@@ -29,7 +29,7 @@ public class GameStateManager : MonoBehaviour {
         calendarField = gameCanvas.transform.Find("Calendar").GetComponent<Text>();
 
         membersField.text = members.ToString("F0");
-        satisfactionField.text = satisfaction.ToString("F0");
+        satisfactionField.text = satisfaction.ToString("F0") + "%";
         productivityField.value = productivity;
 
 
@@ -37,26 +37,38 @@ public class GameStateManager : MonoBehaviour {
     public void SetSatisfaction(float newValue)
     {
         satisfaction = newValue;
+        if (satisfaction < 0)
+            satisfaction = 0;
         satisfactionField.text = satisfaction.ToString("F0") + "%";
     }
     public void SetMembers(float newValue)
     {
         members = newValue;
+        if (members < 1)
+            members = 1;
         membersField.text = members.ToString("F0");
     }
     public void SetProductivity(float newValue)
     {
         productivity = newValue;
+        if (productivity < 0)
+            productivity = 0;
         productivityField.value = productivity;
     }
     public void SetDay(float newValue)
     {
         if (newValue > 7.0f)
         {
-            Time.timeScale = 0;
-            PopUpPrompt();
-            week += 1;
-            day = 1f;
+            if (week == 10)
+            {
+                Debug.Log("it's a new cycle");
+                //Show the cycle results window?
+            }
+            else
+            {
+                Time.timeScale = 0;
+                PopUpPrompt();
+            }
         }
         else
             day = newValue;
@@ -70,11 +82,8 @@ public class GameStateManager : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        //Demo function calls that will only increment the game values over time
-        SetSatisfaction(satisfaction + 1 * Time.deltaTime * 1.25f);
-        SetMembers(members + 1 * Time.deltaTime * 0.2f);
         if (productivity < 100)
-            SetProductivity(productivity + 1 * Time.deltaTime * 1.2f);
-        SetDay(day + Time.deltaTime * 0.5f);
+            SetProductivity(productivity + 1 * Time.deltaTime * 0.835f);
+        SetDay(day + Time.deltaTime * 0.5f * 5f);
     }
 }

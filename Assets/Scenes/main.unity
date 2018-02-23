@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   members: 4
   satisfaction: 30
-  productivity: 20
+  productivity: 0
   week: 1
   day: 1
 --- !u!114 &89789314
@@ -238,8 +238,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5543253fce79e2549a24ac8628250ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PopupPrefab: {fileID: 1366359225800048, guid: e004c0e4d5973994eb87e4946bd5884b,
+    type: 2}
+  PopupProduct: {fileID: 1766030646923378, guid: d452512805fcee746a6615509708a787,
+    type: 2}
   promptPrefab: {fileID: 1649388047729878, guid: e0d06f020c53299469c96eb9b7a41eea,
     type: 2}
+  textFilePrompts: {fileID: 4900000, guid: 46ee7bfaafd002d4ca381c06180a29b7, type: 3}
+  textFileChoices: {fileID: 4900000, guid: bccc5f9c490f85a4f8dba382e5104e79, type: 3}
+  textFileEffects: {fileID: 4900000, guid: ec76be4df64937446ae2ed4dc612b501, type: 3}
+  textObject: {fileID: 0}
 --- !u!1 &206647351
 GameObject:
   m_ObjectHideFlags: 0
