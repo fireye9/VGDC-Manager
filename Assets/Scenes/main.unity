@@ -223,10 +223,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   members: 4
-  satisfaction: 80
-  productivity: 0
+  memberChanges: 0
+  satisfaction: 50
+  productivity: 10
   week: 1
   day: 1
+  resultsPrefab: {fileID: 1973237217544314, guid: 8023e729a2f4f7246a9b4084210915de,
+    type: 2}
 --- !u!114 &89789314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,10 +893,10 @@ RectTransform:
   m_Father: {fileID: 1099050477}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.16864993, y: 0.9032378}
-  m_AnchorMax: {x: 0.26364994, y: 0.9480001}
-  m_AnchoredPosition: {x: 7.0285034, y: -25.408997}
-  m_SizeDelta: {x: 192.56, y: 33.494003}
+  m_AnchorMin: {x: 0.16864993, y: 0.8665493}
+  m_AnchorMax: {x: 0.28268504, y: 0.9032378}
+  m_AnchoredPosition: {x: 20, y: -10.908997}
+  m_SizeDelta: {x: 183.56, y: 36.494003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1389903617
 MonoBehaviour:
@@ -937,7 +940,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 10
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
