@@ -97,7 +97,7 @@ public class GameStateManager : MonoBehaviour {
     private void FixedUpdate()
     {
         if (productivity < 100)
-            SetProductivity(productivity + 1 * Time.deltaTime * .9f);
+            SetProductivity(productivity + 1 * Time.deltaTime * 1.1f);
         SetDay(day + Time.deltaTime);
     }
 }
