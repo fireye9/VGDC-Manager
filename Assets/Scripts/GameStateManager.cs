@@ -61,7 +61,6 @@ public class GameStateManager : MonoBehaviour {
         if (newValue > 7.0f)
         {
             Time.timeScale = 0;
-            //Cycle End
             if (week == 10)
             {
                 memberChanges = Mathf.Ceil((satisfaction - 20) / 3);
@@ -99,6 +98,6 @@ public class GameStateManager : MonoBehaviour {
     {
         if (productivity < 100)
             SetProductivity(productivity + 1 * Time.deltaTime * .9f);
-        SetDay(day + Time.deltaTime * 0.75f * 4f);
+        SetDay(day + Time.deltaTime);
     }
 }
