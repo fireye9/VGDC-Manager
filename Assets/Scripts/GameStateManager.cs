@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
 
-    public float members = 10f;
+    float members = 12f;
+    public float memberChanges;
     Text membersField;
 
     public float satisfaction = 80f;
@@ -19,6 +20,8 @@ public class GameStateManager : MonoBehaviour {
     Text calendarField;
 
     Canvas gameCanvas;
+    public GameObject resultsPrefab;
+    GameObject newResults;
 
     private void Awake()
     {
@@ -31,8 +34,6 @@ public class GameStateManager : MonoBehaviour {
         membersField.text = members.ToString("F0");
         satisfactionField.text = satisfaction.ToString("F0") + "%";
         productivityField.value = productivity;
-
-
     }
     public void SetSatisfaction(float newValue)
     {
@@ -59,21 +60,23 @@ public class GameStateManager : MonoBehaviour {
     {
         if (newValue > 7.0f)
         {
-            //Cycle End
+            Time.timeScale = 0;
             if (week == 10)
             {
-                float memberChanges = Mathf.Ceil((satisfaction - 20) / 5);
+                memberChanges = Mathf.Ceil((satisfaction - 20) / 3);
                 if (memberChanges < 0)
                     memberChanges = 0;
                 SetMembers(memberChanges);
-                //Show the cycle results window?
+                newResults = Instantiate(resultsPrefab);
+                newResults.transform.SetParent(GameObject.Find("UICanvas").transform, false);
+                newResults.transform.Find("Projects").GetComponent<Text>().text = "Projects Completed: "+ "TBD";
+                newResults.transform.Find("ClubMembers").GetComponent<Text>().text = "Members Gained: " + memberChanges.ToString();
                 week = 1;
                 day = 1;
             }
             else
             {
                 PopUpPrompt();
-                Time.timeScale = 0;
             }
         }
         else
@@ -85,11 +88,16 @@ public class GameStateManager : MonoBehaviour {
     {
         GetComponent<TimedPrompt>().CreateNewPrompt();
     }
+    public void CloseResults()
+    {
+        Time.timeScale = 1;
+        Destroy(newResults);
+    }
 
     private void FixedUpdate()
     {
         if (productivity < 100)
-            SetProductivity(productivity + 1 * Time.deltaTime * 0.835f);
-        SetDay(day + Time.deltaTime * 0.5f);
+            SetProductivity(productivity + 1 * Time.deltaTime * .9f);
+        SetDay(day + Time.deltaTime);
     }
 }

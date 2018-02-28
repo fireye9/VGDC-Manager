@@ -46,7 +46,6 @@ public class TimedPrompt : MonoBehaviour {
 
         string[] effectSplit = textFileEffects.text.Split(';');
 
-
         for (int i = 0; i < prompts.Length * 3; i++)
         {
             string[] pairSplit = effectSplit[i].Split(',');
@@ -67,7 +66,6 @@ public class TimedPrompt : MonoBehaviour {
 
         textObject.text = prompts[rnd];
 
-        
 
         //Insert text
         for (int i = 0; i < 3; i++)
@@ -92,9 +90,11 @@ public class TimedPrompt : MonoBehaviour {
         {
             gsm.week += 1;
             gsm.day = 1f;
+            Time.timeScale = 1;
+            Destroy(newPrompt);
         }
-        Time.timeScale = 1;
-        Destroy(newPrompt);
+        else
+            Destroy(newPrompt);
     }
     void ChoiceStatsChange(string choiceName)
     {
@@ -106,7 +106,7 @@ public class TimedPrompt : MonoBehaviour {
         else if (choiceName == "Choice3")
             targetChoice = rnd * 3 + 2;
 
-        if (targetChoice > 0)
+        if (targetChoice >= 0)
         {
             float satEffect = effectsArray[targetChoice].satisfactionEffect;
             float prodEffect = effectsArray[targetChoice].productionEffect;
@@ -130,5 +130,5 @@ public class TimedPrompt : MonoBehaviour {
             newTextProd.transform.SetParent(GameObject.Find("UICanvas").transform, false);
         }
     }
-
+    
 }
