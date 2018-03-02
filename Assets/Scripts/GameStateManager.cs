@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour {
     Text satisfactionField;
 
     public float productivity = 0f;
+    float prodModifier = 1f;
     Slider productivityField;
 
     public int week = 1;
@@ -22,6 +23,9 @@ public class GameStateManager : MonoBehaviour {
     Canvas gameCanvas;
     public GameObject resultsPrefab;
     GameObject newResults;
+
+    public int completedProjects;
+    public int attemptedProjects;
 
     private void Awake()
     {
@@ -44,7 +48,7 @@ public class GameStateManager : MonoBehaviour {
     }
     public void SetMembers(float newValue)
     {
-        members = newValue;
+        members += newValue;
         if (members < 1)
             members = 1;
         membersField.text = members.ToString("F0");
@@ -63,14 +67,24 @@ public class GameStateManager : MonoBehaviour {
             Time.timeScale = 0;
             if (week == 10)
             {
-                memberChanges = Mathf.Ceil((satisfaction - 20) / 3);
+                memberChanges = Mathf.Ceil((satisfaction - 50) / 5);
                 if (memberChanges < 0)
                     memberChanges = 0;
                 SetMembers(memberChanges);
                 newResults = Instantiate(resultsPrefab);
                 newResults.transform.SetParent(GameObject.Find("UICanvas").transform, false);
-                newResults.transform.Find("Projects").GetComponent<Text>().text = "Projects Completed: "+ "TBD";
+                newResults.transform.Find("Projects").GetComponent<Text>().text = "Projects Completed: "+ completedProjects;
                 newResults.transform.Find("ClubMembers").GetComponent<Text>().text = "Members Gained: " + memberChanges.ToString();
+
+                //new quarter bonuses
+                float percentComplete = attemptedProjects / completedProjects;
+                float satisfactionBonus = (percentComplete - 0.75f) / 2;
+                Debug.Log("SatBonus = " + satisfactionBonus.ToString());
+                newResults.transform.Find("SatisfBonus").GetComponent<Text>().text = "Effect on Satisfaction: " + satisfactionBonus.ToString();
+
+                satisfaction += satisfactionBonus;
+                prodModifier = (percentComplete - 0.75f) / 10;
+
                 week = 1;
                 day = 1;
             }
@@ -82,22 +96,19 @@ public class GameStateManager : MonoBehaviour {
         else
             day = newValue;
         calendarField.text = "Week " + week.ToString() + " Day " + day.ToString("F0");
+        if (week == 4 && prodModifier != 1.0f)
+            prodModifier = 1.0f;
     }
 
     void PopUpPrompt()
     {
         GetComponent<TimedPrompt>().CreateNewPrompt();
     }
-    public void CloseResults()
-    {
-        Time.timeScale = 1;
-        Destroy(newResults);
-    }
 
     private void FixedUpdate()
     {
         if (productivity < 100)
-            SetProductivity(productivity + 1 * Time.deltaTime * 1.1f);
+            SetProductivity(productivity + 1 * Time.deltaTime * 1.1f * prodModifier);
         SetDay(day + Time.deltaTime);
     }
 }
