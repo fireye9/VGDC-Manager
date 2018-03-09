@@ -13,7 +13,7 @@ public class GameStateManager : MonoBehaviour {
     Text satisfactionField;
 
     public float productivity = 0f;
-    float prodModifier = 1f;
+    float prodModifier = 0f;
     Slider productivityField;
 
     public int week = 1;
@@ -77,16 +77,22 @@ public class GameStateManager : MonoBehaviour {
                 newResults.transform.Find("ClubMembers").GetComponent<Text>().text = "Members Gained: " + memberChanges.ToString();
 
                 //new quarter bonuses
-                float percentComplete = attemptedProjects / completedProjects;
-                float satisfactionBonus = (percentComplete - 0.75f) / 2;
-                Debug.Log("SatBonus = " + satisfactionBonus.ToString());
-                newResults.transform.Find("SatisfBonus").GetComponent<Text>().text = "Effect on Satisfaction: " + satisfactionBonus.ToString();
+                float percentComplete = completedProjects / attemptedProjects;
+                float satisfactionBonus = ((percentComplete - 0.75f) / 2) * 100;
+                newResults.transform.Find("SatisfBonus").GetComponent<Text>().text = "Satisfaction Change: " + satisfactionBonus.ToString("F0") + "%";
 
                 satisfaction += satisfactionBonus;
                 prodModifier = (percentComplete - 0.75f) / 10;
+                float prodDisplay = prodModifier * 100;
+                newResults.transform.Find("ProdBonus").GetComponent<Text>().text = "Productivity Rate Modifier: " + prodDisplay.ToString("F0") + "%" + "\n(for 3 weeks)";
 
                 week = 1;
                 day = 1;
+
+                //Make teams progress again
+                GameObject[] teams = GameObject.FindGameObjectsWithTag("Team");
+                foreach( GameObject i in teams)
+                    i.GetComponent<ProjectProgress>().SetTeamIsWorking(true);
             }
             else
             {
@@ -96,8 +102,8 @@ public class GameStateManager : MonoBehaviour {
         else
             day = newValue;
         calendarField.text = "Week " + week.ToString() + " Day " + day.ToString("F0");
-        if (week == 4 && prodModifier != 1.0f)
-            prodModifier = 1.0f;
+        if (week == 4 && prodModifier != 0f)
+            prodModifier = 0f;
     }
 
     void PopUpPrompt()
@@ -108,7 +114,7 @@ public class GameStateManager : MonoBehaviour {
     private void FixedUpdate()
     {
         if (productivity < 100)
-            SetProductivity(productivity + 1 * Time.deltaTime * 1.1f * prodModifier);
+            SetProductivity(productivity + 1 * Time.deltaTime * (1.1f + prodModifier));
         SetDay(day + Time.deltaTime);
     }
 }

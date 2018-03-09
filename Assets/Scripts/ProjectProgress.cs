@@ -7,13 +7,13 @@ public class ProjectProgress : MonoBehaviour {
     public float progress = 0f;
     float baseProgressRate = 6.5f;
     float currentProgressRate;
-    bool workingOnProject = true;
+    bool workingOnProject = false;
     GameStateManager gameMgr;
 
-    private void Start()
+    private void Awake()
     {
         gameMgr = GameObject.Find("GameManager").GetComponent<GameStateManager>();
-        gameMgr.attemptedProjects++;
+        
     }
     void MakeProgress()
     {
@@ -24,6 +24,8 @@ public class ProjectProgress : MonoBehaviour {
     public void SetTeamIsWorking(bool value)
     {
         workingOnProject = value;
+        if (value == true)
+            gameMgr.attemptedProjects++;
     }
     public float GetProgressRate()
     {
