@@ -19,7 +19,6 @@ public class TimedPrompt : MonoBehaviour {
     private ChoiceEffect[] effectsArray;
     int rnd;
 
-
     GameStateManager gsm;
     struct ChoiceEffect
     {
@@ -58,7 +57,6 @@ public class TimedPrompt : MonoBehaviour {
         newPrompt = Instantiate(promptPrefab);
         newPrompt.transform.SetParent(GameObject.Find("UICanvas").transform,false);
 
-        
         textObject = newPrompt.transform.Find("PromptText").GetComponent<Text>();
 
         //Select random prompt
