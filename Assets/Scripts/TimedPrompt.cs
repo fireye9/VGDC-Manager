@@ -63,15 +63,15 @@ public class TimedPrompt : MonoBehaviour {
 
         //Select random prompt
         rnd = Random.Range(0, prompts.Length);
-
+        rnd = 0;
         textObject.text = prompts[rnd];
-
 
         //Insert text
         for (int i = 0; i < 3; i++)
         {
             Transform child;
             child = newPrompt.transform.Find("Choices").GetChild(i);
+            Debug.Log(rnd);
             child.Find("Text").GetComponent<Text>().text = choices[rnd][i];
         }
 
