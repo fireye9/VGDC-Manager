@@ -13,7 +13,7 @@ public class ProjectProgress : MonoBehaviour {
     private void Awake()
     {
         gameMgr = GameObject.Find("GameManager").GetComponent<GameStateManager>();
-        
+        SetTeamIsWorking(true);
     }
     void MakeProgress()
     {

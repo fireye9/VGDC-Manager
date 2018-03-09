@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour {
                 week = 1;
                 day = 1;
 
-                //Make teams progress again
+                //Make teams progress again after the cycle restarts
                 GameObject[] teams = GameObject.FindGameObjectsWithTag("Team");
                 foreach( GameObject i in teams)
                     i.GetComponent<ProjectProgress>().SetTeamIsWorking(true);
