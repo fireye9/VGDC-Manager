@@ -68,13 +68,17 @@ public class GameStateManager : MonoBehaviour {
             if (week == 10)
             {
                 memberChanges = Mathf.Ceil((satisfaction - 50) / 5);
-                if (memberChanges < 0)
-                    memberChanges = 0;
+                
                 SetMembers(memberChanges);
                 newResults = Instantiate(resultsPrefab);
                 newResults.transform.SetParent(GameObject.Find("UICanvas").transform, false);
                 newResults.transform.Find("Projects").GetComponent<Text>().text = "Projects Completed: "+ completedProjects;
-                newResults.transform.Find("ClubMembers").GetComponent<Text>().text = "Members Gained: " + memberChanges.ToString();
+                string memText;
+                if (memberChanges < 0)
+                    memText = "Members Gain/ Loss: -";
+                else
+                    memText = "Members Gain/ Loss: +";
+                newResults.transform.Find("ClubMembers").GetComponent<Text>().text = memText + memberChanges.ToString();
 
                 //new quarter bonuses
                 float percentComplete = completedProjects / attemptedProjects;

@@ -45,9 +45,10 @@ public class TimedPrompt : MonoBehaviour {
 
         string[] effectSplit = textFileEffects.text.Split(';');
 
-        for (int i = 0; i < prompts.Length * 3; i++)
+        for (int i = 0; i < (prompts.Length * 3); i++)
         {
             string[] pairSplit = effectSplit[i].Split(',');
+            
             ChoiceEffect newEffect = new ChoiceEffect( int.Parse(pairSplit[0]), int.Parse(pairSplit[1]) );
             effectsArray[i] = newEffect;
         }
