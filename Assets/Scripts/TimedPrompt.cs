@@ -18,6 +18,8 @@ public class TimedPrompt : MonoBehaviour {
     private string[][] choices;
     private ChoiceEffect[] effectsArray;
     int rnd;
+    int numTeams;
+
 
     GameStateManager gsm;
     struct ChoiceEffect
@@ -34,8 +36,16 @@ public class TimedPrompt : MonoBehaviour {
     private void Awake()
     {
         gsm = GetComponent(typeof(GameStateManager)) as GameStateManager;
-        
+
+        numTeams = GameObject.Find("UICanvas").GetComponent<Canvas>().transform.Find("Teams").childCount;
+
         prompts = textFilePrompts.text.Split('\n');
+        for (int i = 0; i < prompts.Length; ++i)
+        {
+            
+            prompts[i] = prompts[i].Replace("(maybe provide specific name)",
+                 GameObject.Find("UICanvas").GetComponent<Canvas>().transform.Find("Teams").GetChild(Random.Range(0,numTeams)).ToString());
+        }
         effectsArray = new ChoiceEffect[prompts.Length * 3];
 
         choices = new string[prompts.Length][];
@@ -45,10 +55,9 @@ public class TimedPrompt : MonoBehaviour {
 
         string[] effectSplit = textFileEffects.text.Split(';');
 
-        for (int i = 0; i < (prompts.Length * 3); i++)
+        for (int i = 0; i < prompts.Length * 3; i++)
         {
             string[] pairSplit = effectSplit[i].Split(',');
-            
             ChoiceEffect newEffect = new ChoiceEffect( int.Parse(pairSplit[0]), int.Parse(pairSplit[1]) );
             effectsArray[i] = newEffect;
         }
@@ -58,11 +67,14 @@ public class TimedPrompt : MonoBehaviour {
         newPrompt = Instantiate(promptPrefab);
         newPrompt.transform.SetParent(GameObject.Find("UICanvas").transform,false);
 
+        
         textObject = newPrompt.transform.Find("PromptText").GetComponent<Text>();
 
         //Select random prompt
         rnd = Random.Range(0, prompts.Length);
+
         textObject.text = prompts[rnd];
+
 
         //Insert text
         for (int i = 0; i < 3; i++)
