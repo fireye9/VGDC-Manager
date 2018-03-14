@@ -127,5 +127,4 @@ public class TimedPrompt : MonoBehaviour {
             newTextProd.transform.SetParent(GameObject.Find("UICanvas").transform, false);
         }
     }
-    
 }

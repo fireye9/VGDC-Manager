@@ -12,7 +12,7 @@ public class GameStateManager : MonoBehaviour {
     public float satisfaction = 80f;
     Text satisfactionField;
 
-    public float productivity = 0f;
+    public float productivity = 10f;
     float prodModifier = 0f;
     Slider productivityField;
 
@@ -92,7 +92,7 @@ public class GameStateManager : MonoBehaviour {
 
                 week = 1;
                 day = 1;
-
+                
                 //Make teams progress again after the cycle restarts
                 GameObject[] teams = GameObject.FindGameObjectsWithTag("Team");
                 foreach( GameObject i in teams)
