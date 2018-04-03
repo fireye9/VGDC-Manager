@@ -27,6 +27,7 @@ public class GameStateManager : MonoBehaviour {
     public int completedProjects;
     public int attemptedProjects;
 
+    public AudioClip EndQuarterClip;
     private void Awake()
     {
         gameCanvas = GameObject.Find("UICanvas").GetComponent<Canvas>();
@@ -97,6 +98,8 @@ public class GameStateManager : MonoBehaviour {
                 GameObject[] teams = GameObject.FindGameObjectsWithTag("Team");
                 foreach( GameObject i in teams)
                     i.GetComponent<ProjectProgress>().SetTeamIsWorking(true);
+                //Play end quarter clip
+                GetComponent<AudioSource>().PlayOneShot(EndQuarterClip);
             }
             else
             {
